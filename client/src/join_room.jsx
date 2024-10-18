@@ -38,7 +38,7 @@ function JoinChatPage() {
     <div style={styles.container}>
       {!isJoined ? (
         <div>
-          <h1 style={styles.heading}>Join Chat Room</h1>
+          <h1 style={styles.heading}>Join Chat Room..</h1>
 
           <div style={styles.formGroup}>
             <input

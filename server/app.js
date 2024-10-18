@@ -11,7 +11,7 @@ app.use(bodyParser.json()); // To parse JSON requests
 app.use(cors()); // To enable CORS
 
 app.get('/', (req, res) => {
-    res.send('Hello');
+    res.send('Hello12');
 });
 
 const server = http.createServer(app);

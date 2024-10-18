@@ -2,44 +2,33 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Chat from './chat';
 
-const socket = io('https://chatbackend-sage.vercel.app/'); // Replace with your server URL
+
+
+const socket=io.connect("https://chatbackend-sage.vercel.app")
 
 function JoinChatPage() {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [isJoined, setIsJoined] = useState(false); // To track if the user has joined the chat
-  const [errorMessage, setErrorMessage] = useState(''); // To store the validation error message
+//   const [showChat, setShowChat] = useState(false)
 
   const handleJoin = () => {
-    
-    if (username === '' || room === '') {
-       
-      setErrorMessage('Please fill in all fields');
-      setTimeout(() => {
-          setErrorMessage('');
-            
-      }, 1500);
-      return; 
+    if (username !== "" && room !== "") {
+        socket.emit("join_room", room);
+        // setShowChat(true)
+      setIsJoined(true); // Set user as joined once they emit the event
     }
-
-    setErrorMessage(''); // Clear error if inputs are valid
-    socket.emit('join_room', room);
-    setIsJoined(true); // Set user as joined once they emit the event
   };
 
   // Optionally, clean up socket on component unmount
-//   useEffect(() => {
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, []);
+  
 
   return (
     <div style={styles.container}>
       {!isJoined ? (
         <div>
-          <h1 style={styles.heading}>Join Chat Room..</h1>
-
+          <h1 style={styles.heading}>Join Chat Room</h1>
+          
           <div style={styles.formGroup}>
             <input
               type="text"
@@ -59,9 +48,6 @@ function JoinChatPage() {
               style={styles.input}
             />
           </div>
-
-          {/* Display validation error */}
-          {errorMessage && <p style={styles.error}>{errorMessage}</p>}
 
           <button onClick={handleJoin} style={styles.button}>
             Join
@@ -95,12 +81,6 @@ const styles = {
     fontSize: '1rem',
     border: '1px solid #ccc',
     borderRadius: '4px',
-  },
-  error: {
-    color: 'red',
-    fontSize: '0.9rem',
-    marginTop: '-10px',
-    marginBottom: '10px',
   },
   button: {
     padding: '10px 20px',

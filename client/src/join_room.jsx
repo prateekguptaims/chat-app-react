@@ -6,6 +6,8 @@ import Chat from './chat';
 
 const socket=io.connect("https://chatbackend-sage.vercel.app")
 
+// const socket = io('http://localhost:8081'); // Replace with your server URL
+
 function JoinChatPage() {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');

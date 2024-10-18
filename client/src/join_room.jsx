@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Chat from './chat';
 
-const socket = io('http://localhost:8080'); // Replace with your server URL
+const socket = io('https://chatbackend-igqc4za65-prateekguptaims-projects.vercel.app/'); // Replace with your server URL
 
 function JoinChatPage() {
   const [username, setUsername] = useState('');

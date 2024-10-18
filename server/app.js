@@ -7,18 +7,23 @@ const cors = require('cors');
 
 const app = express();
 
+// Middleware
 app.use(bodyParser.json()); // To parse JSON requests
 app.use(cors()); // To enable CORS
 
 app.get('/', (req, res) => {
-    res.send('Hello12');
+    res.send('Hello');
 });
 
+const PORT = 8081;
+
+// Create HTTP server and attach socket.io to it
 const server = http.createServer(app);
 
+// Create a new instance of socket.io and attach it to the HTTP server
 const io = new Server(server, {
     cors: {
-        origin: "https://chatappreact-three.vercel.app/", 
+        origin: "https://chatappreact-three.vercel.app", // Allow any origin for now, you can restrict it to your frontend URL
         methods: ["GET","POST","PUT"]
     }
 });
@@ -40,10 +45,11 @@ io.on("connection",(socket)=>{console.log(socket.id)
 });
 
 
-// const PORT = process.env.port || 8080;
 
-const PORT = 8080;
+app.use(cors());
 
-app.listen(PORT,()=>{
-    console.log(`Server is running on ${PORT}`)
-})
+
+// Start the server
+server.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`);
+});

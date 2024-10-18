@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import './App.css'
 import JoinChatPage from './join_room'
 
-const socket=io.connect("https://chatbackend-igqc4za65-prateekguptaims-projects.vercel.app/")
+const socket=io.connect("https://chatbackend-sage.vercel.app/")
 
 
 function App() {

@@ -8,14 +8,21 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+
+// CORS configuration
+app.use(cors({
+    origin: "https://chatappreact-three.vercel.app", // Frontend URL
+    methods: ["GET", "POST", "PUT"],
+    credentials: true,
+}));
 
 // Simple route
 app.get('/', (req, res) => {
     res.send('Hello');
 });
 
-const PORT = 8081;
+// Use environment variable for port or fallback to 8081
+const PORT = process.env.PORT || 8081;
 
 // Create HTTP server and attach socket.io to it
 const server = http.createServer(app);
@@ -23,8 +30,9 @@ const server = http.createServer(app);
 // Create a new instance of socket.io and attach it to the HTTP server
 const io = new Server(server, {
     cors: {
-        origin: "https://chatappreact-three.vercel.app", // Replace with your frontend URL
-        methods: ["GET", "POST", "PUT"],
+        origin: "https://chatappreact-three.vercel.app", // Frontend URL
+        methods: ["GET", "POST"],
+        credentials: true,
     },
 });
 
@@ -49,5 +57,5 @@ io.on("connection", (socket) => {
 
 // Start the server
 server.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

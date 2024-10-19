@@ -2,36 +2,45 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Chat from './chat';
 
-
 const socket = io("https://chatbackend-sable.vercel.app", {
-  transports: ["websocket", "polling"],
+  transports: ["websocket", "polling"], // Use WebSocket, fallback to polling if necessary
 });
-
-
-// const socket = io('http://localhost:8081'); // Replace with your server URL
 
 function JoinChatPage() {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [isJoined, setIsJoined] = useState(false); // To track if the user has joined the chat
-//   const [showChat, setShowChat] = useState(false)
+
+  // Effect to handle socket connection status
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to the server");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from the server");
+    });
+
+    // Clean up the socket connection on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const handleJoin = () => {
     if (username !== "" && room !== "") {
-        socket.emit("join_room", room);
-        // setShowChat(true)
+      socket.emit("join_room", room);
       setIsJoined(true); // Set user as joined once they emit the event
+    } else {
+      alert("Please enter both username and room name."); // Validation message
     }
   };
-
-  // Optionally, clean up socket on component unmount
-  
 
   return (
     <div style={styles.container}>
       {!isJoined ? (
         <div>
-          <h1 style={styles.heading}>Join Chat Room.</h1>
+          <h1 style={styles.heading}>Join Chat Room</h1>
           
           <div style={styles.formGroup}>
             <input

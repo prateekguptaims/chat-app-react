@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 // CORS configuration
 app.use(cors({
-    origin: "https://chatappreact-three.vercel.app", // Frontend URL
+    origin: "*", // Frontend URL
     methods: ["GET", "POST", "PUT"],
     credentials: true,
 }));

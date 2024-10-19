@@ -30,11 +30,12 @@ const server = http.createServer(app);
 // Create a new instance of socket.io and attach it to the HTTP server
 const io = new Server(server, {
     cors: {
-        origin: "https://chatappreact-three.vercel.app", // Frontend URL
+        origin: "https://chatappreact-three.vercel.app", // Your frontend URL
         methods: ["GET", "POST"],
-        credentials: true,
+        credentials: true, // Allows credentials (important for cross-origin cookies/auth)
     },
 });
+
 
 // Handling Socket.IO events
 io.on("connection", (socket) => {

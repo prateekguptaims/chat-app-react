@@ -37,17 +37,15 @@ const io = new Server(server, {
 });
 
 
-// Handling Socket.IO events
 io.on("connection", (socket) => {
     console.log(`User connected: ${socket.id}`);
-
     socket.on("join_room", (room) => {
+        console.log(`User ID: ${socket.id} trying to join room: ${room}`);
         socket.join(room);
-        console.log(`User ID: ${socket.id} joined room: ${room}`);
     });
 
     socket.on("send_message", (data) => {
-        console.log("Message data: ", data);
+        console.log("Message received: ", data);
         socket.to(data.room).emit("receive_message", data);
     });
 
@@ -55,6 +53,7 @@ io.on("connection", (socket) => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
+
 
 // Start the server
 server.listen(PORT, () => {

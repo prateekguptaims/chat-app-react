@@ -3,8 +3,10 @@ import io from 'socket.io-client';
 import Chat from './chat';
 
 
+const socket = io("https://chatbackend-sable.vercel.app", {
+  transports: ["websocket", "polling"],
+});
 
-const socket=io.connect("https://chatbackend-sable.vercel.app")
 
 // const socket = io('http://localhost:8081'); // Replace with your server URL
 

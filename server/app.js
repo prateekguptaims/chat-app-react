@@ -29,7 +29,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://chatappreact-three.vercel.app", // Replace with your frontend URL
+    origin: "https://chatappreact-three.vercel.app/", // Replace with your frontend URL
     methods: ["GET", "POST"],
   },
   transports: ["websocket", "polling"],  // Allow WebSocket and polling transports

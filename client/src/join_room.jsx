@@ -4,7 +4,7 @@ import Chat from './chat';
 
 // Create socket outside the component to avoid reinitializing on each render
 
-const socket = io("https://chatbackend-sable.vercel.app:8080", {
+const socket = io("https://chatbackend-sable.vercel.app:8081", {
   transports: ["websocket"], // Force WebSocket transport only
 });
 

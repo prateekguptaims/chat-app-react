@@ -37,25 +37,15 @@ const io = new Server(server, {
 
 // Socket.IO event handling
 io.on("connection", (socket) => {
-    console.log(`User connected: ${socket.id}`);
-
-    // Handle joining a room
-    socket.on("join_room", (room) => {
-        console.log(`User ID: ${socket.id} joined room: ${room}`);
-        socket.join(room);  // Join the specified room
+    console.log(`User connected: ${socket.id}`); // Log when a connection is made
+    socket.on("error", (err) => {
+        console.log("Socket error: ", err); // Log any socket errors
     });
-
-    // Handle receiving and broadcasting messages
-    socket.on("send_message", (data) => {
-        console.log("Message received:", data);
-        socket.to(data.room).emit("receive_message", data);  // Broadcast message to others in the room
-    });
-
-    // Handle disconnection
     socket.on("disconnect", () => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
+
 
 // Start the server and listen on the defined port
 server.listen(PORT, () => {

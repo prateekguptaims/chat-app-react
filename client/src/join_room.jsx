@@ -3,8 +3,9 @@ import io from 'socket.io-client';
 import Chat from './chat';
 
 // Create socket outside the component to avoid reinitializing on each render
-const socket = io("https://chatbackend-sable.vercel.app", {
-  transports: ["websocket", "polling"], // Use WebSocket, fallback to polling if necessary
+
+const socket = io("https://chatbackend-sable.vercel.app:8080", {
+  transports: ["websocket"], // Force WebSocket transport only
 });
 
 function JoinChatPage() {

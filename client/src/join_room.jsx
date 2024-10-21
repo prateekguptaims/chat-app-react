@@ -12,21 +12,22 @@ function JoinChatPage() {
   const [isJoined, setIsJoined] = useState(false); // To track if the user has joined the chat
 
   // Effect to handle socket connection status
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Connected to the server");
-    });
+ 
+io.on("connection",(socket)=>{console.log(socket.id)
 
-    socket.on("disconnect", () => {
-      console.log("Disconnected from the server");
-    });
+    socket.on("join_room",(data)=>{
+        socket.join(data);
+        console.log(`User ID :- ${socket.id} joined room : ${data}`)
+    })
 
-    // Clean up the socket connection on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+    socket.on("send_message",(data)=>{console.log("send message data ",data)
+    socket.to(data.room).emit("receive_message",data)
+})
 
+    socket.on("disconnect",()=>{
+        console.log("User Disconnected..",socket.id)
+    })
+});
   const handleJoin = () => {
     if (username !== "" && room !== "") {
       socket.emit("join_room", room);
